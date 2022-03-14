@@ -48,13 +48,38 @@
 --	d.datdiplomiranja = i.datpolaganja
 
 
+--10
+--select p1.oznaka,p2.oznaka, p1.espb
+--from da.predmet p1 join da.predmet p2 on
+--	p1.id > p2.id
+--where p1.espb = p2.espb
+
+--11
+
+--select distinct d.indeks, ime, prezime
+--from da.dosije d join da.ispit i on 
+--	d.indeks = i.indeks join da.predmet p on 
+--		p.id = i.idpredmeta
+--where d.prezime like '___a%c' and
+--	  i.status = 'o' and
+--	  i.ocena between 2 and 10 and
+--	  i.datpolaganja between '05.01.2018' and '15.12.2018'
+--order by prezime, ime desc
+
+--12
+--Za svaki predmet koji može da se sluša na nekom studijskom programu izdvojiti uslovne predmete tog predmeta. 
+--Izdvojiti identifikator studijskog programa, identifikator predmeta, vrstu tog predmeta (obavezan ili izborni)
+--na studijskom programu i identifikator uslovnog predmeta. Izdvojiti i predmete koji nemaju uslovne predmete.
 
 
 
 
-
-
-
+--13
+select distinct d.indeks, ime, prezime, datdiplomiranja, naziv, datkraja
+from da.dosije d join da.ispit i on 
+	d.indeks = i.indeks full join da.ispitnirok ir on
+	ir.skgodina = i.skgodina
+where d.datdiplomiranja = ir.datkraja
 
 
 
