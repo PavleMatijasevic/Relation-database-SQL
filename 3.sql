@@ -64,125 +64,84 @@
 --		where ug.skgodina = sg.skgodina and ug.indeks = d.indeks
 --	)
 --)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--7
+
+--select indeks
+--from da.dosije d
+--where not exists(
+--	select *
+--	from da.ispitnirok ir
+--	where not exists(
+--		select *
+--		from da.ispit i
+--		where i.indeks = d.indeks
+--			  and i.skgodina = ir.skgodina
+--			  and status not in ('p', 'n')
+--		)
+--)
+
+--8
+
+--select indeks
+--from da.dosije d
+--where not exists(
+--	select *
+--	from da.ispitnirok ir
+--	where skgodina = 2018
+--	and not exists(
+--		select *
+--		from da.ispit i
+--		where i.skgodina = 2018
+--			and i.indeks = d.indeks
+--			and i.oznakaroka = ir.oznakaroka
+--			and i.status not in ('p', 'n')
+--	)
+--)
+
+--9
+--
+--select *
+--from da.predmet
+--where espb >= all(select espb 
+--				from da.predmet)
+--
+
+--10
+
+--select *
+--from da.dosije
+--where datdiplomiranja <= all(select datdiplomiranja
+--	from da.dosije
+--	where datdiplomiranja is not null)
+
+
+--11
+
+--select *
+--from da.dosije
+--where not datdiplomiranja <= all (select datdiplomiranja
+--	from da.dosije where  datdiplomiranja is not null) 
+
+--12
+--
+--select *
+--from da.predmet p
+--where exists (
+--	select *
+--	from da.upisankurs uk
+--	where uk.idpredmeta = p.id
+--	)
+
+--13
+
+
+--
+--select ime, prezime, naziv, skgodina, oznakaroka, ocena
+--from da.dosije d left join da.ispit i 
+--		on d.indeks=i.indeks and ocena>5 and status='o'
+--	 left join da.predmet p 
+--	    on i.idpredmeta=p.id
+--where exists (select *
+--              from da.ispit
+--              where indeks=d.indeks and skgodina=2018
+--                     and status not in ('p', 'n'));
